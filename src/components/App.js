@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Auth from '../routes/Auth';
 import Home from '../routes/Home';
 import { authService } from '../fbase';
+import Navigation from './Navigation';
+import Profile from 'routes/Profile';
 
 
 
@@ -24,15 +26,17 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Routes>
-        {
-          isLoggedIn ? (
-            <Route path='/' element={<Home />} />
-          ):(
-            <Route path='/' element={<Auth />} />
-          )
-        }
-      </Routes>
+      {isLoggedIn && <Navigation />}
+      {isLoggedIn ? (
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/profile' element={<Profile />} />
+        </Routes>
+      ) : (
+        <Routes>
+          <Route path='/' element={<Auth />} />
+        </Routes>
+      )}
     </BrowserRouter>
   );
 }
