@@ -4,14 +4,16 @@ import {HiPhotograph} from 'react-icons/hi';
 import { dbService } from 'fbase';
 
 const Base = styled.div`
-    width: 100%;
-    height: 250px;
-    background-color: #fff;
-    padding: 20px;
-    box-sizing: border-box;
-    border-radius: 30px;
-    display: flex;
-    justify-content: space-between;
+  width: 100%;
+  height: 250px;
+  background-color: #fff;
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 30px;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+  margin-bottom: 50px;
 `;
 const ProfileImgWrapper = styled.div`
     width: 50px;
