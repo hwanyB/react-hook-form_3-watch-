@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import {HiPhotograph} from 'react-icons/hi';
 import { dbService } from 'fbase';
 
@@ -54,12 +54,13 @@ const TweetBtn = styled.button`
 `;
 
 
-export default function TwittingContainer() {
+export default function TwittingContainer({ userObj }) {
     const [tweet, setTweet] = useState('');
     const onTweetBtnClick = async (event) => {
         await dbService.collection("tweets").add({
-            tweet,
+            text: tweet,
             createdAt: Date.now(),
+            creatorId: userObj.uid,
         });
         setTweet("");
     };

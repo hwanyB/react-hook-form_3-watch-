@@ -11,11 +11,14 @@ import Profile from 'routes/Profile';
 function App() {
   const [init, setInit] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userObj, setUserObj] = useState(null);
+
 
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if(user){
         setIsLoggedIn(true);
+        setUserObj(user)
       } else{
         setIsLoggedIn(false);
       }
@@ -25,11 +28,11 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter>
+    <BrowserRouter isLoggedIn={isLoggedIn} userObj={userObj}>
       {isLoggedIn && <Navigation />}
       {isLoggedIn ? (
         <Routes>
-          <Route path='/' element={<Home />} />
+          <Route path='/' element={<Home userObj={userObj} />} />
           <Route path='/profile' element={<Profile />} />
         </Routes>
       ) : (

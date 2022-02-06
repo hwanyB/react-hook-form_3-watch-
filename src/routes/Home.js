@@ -11,11 +11,11 @@ const Base = styled.div`
   margin: 0 auto;
 `;
 
-export default function Home() {
+export default function Home({ userObj }) {
   return (
     <Base>
-      <TwittingContainer />
-      <GetTwitsContainer />
+      <TwittingContainer userObj={userObj} />
+      <GetTwitsContainer userObj={userObj} />
     </Base>
   );
 }

@@ -13,6 +13,7 @@ const Base = styled.nav`
   height: 80px;
   background-color: #fff;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+  z-index: 99;
 `;
 const NavList = styled.ul`
   height: 80px;
