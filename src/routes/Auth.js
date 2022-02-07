@@ -1,7 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { authService, firebaseInstance } from 'fbase';
+import React from 'react'
 import styled, { keyframes } from 'styled-components';
-import { FaArrowLeft } from 'react-icons/fa';
 import AuthContainer from 'components/AuthContainer';
 
 const bgimgFade = keyframes`

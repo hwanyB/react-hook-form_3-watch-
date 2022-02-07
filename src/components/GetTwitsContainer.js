@@ -2,6 +2,7 @@ import { dbService } from 'fbase';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { MdModeEditOutline, MdDelete } from 'react-icons/md';
+import { CgClose } from 'react-icons/cg';
 
 
 const Base = styled.div`
@@ -25,57 +26,97 @@ const ProfileImgWrapper = styled.div`
 const ProfileImg = styled.img``;
 const UserName = styled.div``;
 const Tweet = styled.div`
-    font-weight: 300;
-    text-align: left;
+  color: #000;
+  font-weight: 300;
+  text-align: left;
 `;
 const UpdateWrapper = styled.div`
     display: flex;
 `;
 const EditTweet = styled.div`
     margin-right: 10px;
+    cursor: pointer;
 `;
-const DeletTweet = styled.div``;
+const DeletTweet = styled.div`
+  cursor: pointer;
+`;
 
-export default function GetTwitsContainer({ useObj }) {
-    const [tweets, setTweets] = useState([]);
-    // const getTweets = async () => {
-    //     const dbTweets = await dbService.collection("tweets").get();
-    //     dbTweets.forEach((document) => {
-    //         const tweetObject = {
-    //             ...document.data(),
-    //             id: document.id,
-    //         };
-    //         setTweets((prev) => [tweetObject, ...prev]);
-    //     });
-    // };
-    useEffect(() => {
-        dbService.collection('tweets').onSnapshot((snapshot) => {
-            const tweetArr = snapshot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data(),
-            }));
-            setTweets(tweetArr);
-        })
-    }, []);
+
+const EditTweetForm = styled.form`
+
+`;
+const EditInput = styled.input`
+  border: 1px solid #2b9cff;
+  outline: none;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: 300;  
+  border-radius: 50px;
+`;
+const EditSubmit = styled.input`
+  height: 35px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  background-color: #2b9cff;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 0 20px;
+  margin-left: 20px;
+`;
+
+export default function GetTwitsContainer({ userObj, tweetObj }) {
+    const [isEditing, setIsEditing] = useState(false);
+    const [newTweetValue, setNewTweetValue]= useState(tweetObj.text);
+    const onDeleteClick = async () => {
+        const ok = window.confirm("Are you sure you want to delete?");
+        if(ok){
+          await dbService.doc(`tweets/${tweetObj.id}`).delete();
+        }
+    };
+    const toggleEditing = () => setIsEditing((prev) => !prev)
+    const onEditSubmit = async (event) => {
+        event.preventDefault();
+        await dbService.doc(`tweets/${tweetObj.id}`).update({
+            text: newTweetValue,
+        });
+        setIsEditing(false);
+    }
+    const onEditChange = (event) => {
+        const {
+          target: { value },
+        } = event;
+        setNewTweetValue(value);
+    };
   return (
-    <Base>
-      {tweets.map((tweet) => (
-        <TweetWrapper key={tweet.id}>
-          <ProfileImgWrapper>
-            <ProfileImg />
-            <UserName></UserName>
-          </ProfileImgWrapper>
-          <Tweet>{tweet.text}</Tweet>
-          <UpdateWrapper>
-            <EditTweet>
-                <MdModeEditOutline color='#2B9CFF' size={25} />
-            </EditTweet>
-            <DeletTweet>
-                <MdDelete color='#2B9CFF' size={25} />
-            </DeletTweet>
-          </UpdateWrapper>
-        </TweetWrapper>
-      ))}
-    </Base>
+    <TweetWrapper>
+      <ProfileImgWrapper>
+        <ProfileImg />
+        <UserName></UserName>
+      </ProfileImgWrapper>
+      {isEditing ? (
+        <EditTweetForm onSubmit={onEditSubmit}>
+          <EditInput type='text' value={newTweetValue} onChange={onEditChange} required />
+          <EditSubmit type='submit' value="Update Tweet" />
+        </EditTweetForm>
+      ) : (
+        <Tweet>{tweetObj.text}</Tweet>
+      )}
+      {tweetObj.creatorId === userObj.uid && (
+        <UpdateWrapper>
+          <EditTweet onClick={toggleEditing}>
+            {isEditing ? (
+              <CgClose color='#2B9CFF' size={25} />
+            ) : (
+              <MdModeEditOutline color='#2B9CFF' size={25} />
+            )}
+          </EditTweet>
+          <DeletTweet onClick={onDeleteClick}>
+            <MdDelete color='#2B9CFF' size={25} />
+          </DeletTweet>
+        </UpdateWrapper>
+      )}
+    </TweetWrapper>
   );
 }

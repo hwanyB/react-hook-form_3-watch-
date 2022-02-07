@@ -33,13 +33,16 @@ const StyledLink = styled(Link)`
 `;
 
 
-export default function Navigation() {
-    const onLogoutClick = () => authService.signOut();
+export default function Navigation({setIsLoggedIn}) {
+    const onLogoutClick = () => {
+        authService.signOut();
+        setIsLoggedIn(false);
+    }
   return (
     <Base>
       <NavList>
         <NavItem>
-          <StyledLink onClick={onLogoutClick} to='/auth'>
+          <StyledLink onClick={onLogoutClick} to='/'>
             <BiLogOut size={30} color='#2B9CFF' />
           </StyledLink>
         </NavItem>

@@ -28,8 +28,8 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter isLoggedIn={isLoggedIn} userObj={userObj}>
-      {isLoggedIn && <Navigation />}
+    <BrowserRouter isLoggedIn={isLoggedIn}>
+      {isLoggedIn && <Navigation setIsLoggedIn />}
       {isLoggedIn ? (
         <Routes>
           <Route path='/' element={<Home userObj={userObj} />} />

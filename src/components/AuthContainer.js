@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { authService, firebaseInstance } from 'fbase';
 import styled, { keyframes } from 'styled-components';
 import { FaArrowLeft } from 'react-icons/fa';
@@ -220,13 +220,13 @@ const SuccessSignupText = styled.p`
 export default function AuthContainer() {
     const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [newAccount, setNewAccount] = useState(true);
   const [error, setError] = useState("");
   const [authWrapperDp, setAuthWrapperDp] = useState(false);
   const [isOpenSignupForm, setIsOpenSignupForm] = useState(false);
   const [backText, setBackText] = useState(false);
   const [successSigup,setSuccessSignup] = useState("");
   const [btnTxt, setBtnTxt] = useState("가입하기");
+  const [bottomBtnTxt, setBottomBtnTxt] = useState("로그인");
 
   useEffect (() => {
     setTimeout(() => {
@@ -237,12 +237,14 @@ export default function AuthContainer() {
   const onClickCreateAccountWithEmailBtn = (e) => {
     e.preventDefault();
     setIsOpenSignupForm(prev => !prev);
-    setBtnTxt("가입하기")
+    setBtnTxt("가입하기");
+    setBottomBtnTxt('로그인');
   }
   const onClickLoginBtn = (e) => {
     e.preventDefault();
     setIsOpenSignupForm(true);
     setBtnTxt("로그인");
+    setBottomBtnTxt('가입하기');
   }
 
   const onChange = (event) => {
@@ -365,7 +367,7 @@ export default function AuthContainer() {
               </AuthForm>
             )}
             <LoginWapper>
-              <LoginText>이미 트위터에 가입하셨나요 ?</LoginText>
+              <LoginText>{bottomBtnTxt === "로그인" ? "이미 트위터에 가입하셨나요 ?" : "트위터 계정이 없으신가요?"}</LoginText>
               <Arrow>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
@@ -393,8 +395,8 @@ export default function AuthContainer() {
                   />
                 </svg>
               </Arrow>
-              <LoginButton onClick={onClickLoginBtn}>
-                로그인
+              <LoginButton onClick={bottomBtnTxt === "가입하기" ? onClickCreateAccountWithEmailBtn : onClickLoginBtn}>
+                {bottomBtnTxt}
               </LoginButton>
             </LoginWapper>
           </AuthWrapper>
