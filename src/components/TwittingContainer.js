@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import {HiPhotograph} from 'react-icons/hi';
 import { dbService } from 'fbase';
 import GetTwitsContainer from './GetTwitsContainer';
+import { CgClose } from 'react-icons/cg';
+
 
 const Base = styled.div`
     width: 100%;
@@ -40,6 +42,18 @@ const TwittingForm = styled.form`
     flex-direction: column;
     justify-content: space-between;
 `;
+
+const PrevieWrapper = styled.div`
+    display: flex;
+`;
+
+const PhotoPreview = styled.img`
+    width: 50px;
+`;
+const CacleAdd = styled.div`
+    cursor: pointer;
+    margin-left: 20px;
+`;
 const TwittingInput = styled.input`
     border: none;
     outline: none;
@@ -47,7 +61,14 @@ const TwittingInput = styled.input`
     font-size: 20px;
     font-weight: 300;
 `;
-const AddPhotoIcon = styled.div`
+const AddPhotoIcon = styled.form`
+    cursor: pointer;
+`;
+const PhotoInput = styled.input`
+    background-color: transparent;
+    border: none;
+    outline: none;
+    display: none;
 `;
 const TweetBtn = styled.button`
   height: 35px;
@@ -65,6 +86,7 @@ const TweetBtn = styled.button`
 
 
 export default function TwittingContainer({ userObj, tweetObj, setTweet }) {
+    const [photoAttachment, setPhotoAttachment] = useState();
 
   const onTweetBtnClick = async (event) => {
     await dbService.collection("tweets").add({
@@ -81,6 +103,30 @@ export default function TwittingContainer({ userObj, tweetObj, setTweet }) {
     } = event;
     setTweet(value);
   };
+
+  const onAddPhotoChange =  (event) => {
+    const {
+        target : { files },
+    } = event;
+    const Photos = files[0];
+    const reader = new FileReader();
+    reader.onloadend = (finishedEvent) => {
+        const {
+          currentTarget: { result },
+        } = finishedEvent;
+        setPhotoAttachment(result);
+    }
+    reader.readAsDataURL(Photos);
+  }
+
+  const onAddPhotoClick = () => {
+      document.getElementById("photoInput").click();
+  }
+
+  const onCancleAddClick = () => {
+      setPhotoAttachment(null);
+  }
+
   return (
     <Base>
       <TwittingBase>
@@ -88,6 +134,15 @@ export default function TwittingContainer({ userObj, tweetObj, setTweet }) {
           <ProfileImg src='profileimg.jpg' />
         </ProfileImgWrapper>
         <TwittingForm>
+          {photoAttachment && (
+            <PrevieWrapper>
+              <PhotoPreview src={photoAttachment} />
+              <CacleAdd onClick={onCancleAddClick}>
+                <CgClose color='#2B9CFF' size={25} />
+              </CacleAdd>
+            </PrevieWrapper>
+          )}
+
           <TwittingInput
             value={tweetObj}
             onChange={onChange}
@@ -96,7 +151,13 @@ export default function TwittingContainer({ userObj, tweetObj, setTweet }) {
             maxLength={120}
           />
           <AddPhotoIcon>
-            <HiPhotograph color='#2B9CFF' size={30} />
+            <PhotoInput
+              type='file'
+              accept='image/*'
+              id='photoInput'
+              onChange={onAddPhotoChange}
+            />
+            <HiPhotograph onClick={onAddPhotoClick} color='#2B9CFF' size={30} />
           </AddPhotoIcon>
         </TwittingForm>
         <TweetBtn onClick={onTweetBtnClick}>Tweet</TweetBtn>

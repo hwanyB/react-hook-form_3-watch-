@@ -97,7 +97,7 @@ export default function GetTwitsContainer({ userObj, tweetObj }) {
       </ProfileImgWrapper>
       {isEditing ? (
         <EditTweetForm onSubmit={onEditSubmit}>
-          <EditInput type='text' value={newTweetValue} onChange={onEditChange} required />
+          <EditInput type='text' value={newTweetValue} onChange={onEditChange} required autoFocus />
           <EditSubmit type='submit' value="Update Tweet" />
         </EditTweetForm>
       ) : (
