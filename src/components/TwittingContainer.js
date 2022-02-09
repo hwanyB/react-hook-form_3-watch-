@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import {HiPhotograph} from 'react-icons/hi';
-import { dbService } from 'fbase';
+import { dbService, storageService } from 'fbase';
 import GetTwitsContainer from './GetTwitsContainer';
 import { CgClose } from 'react-icons/cg';
+import { v4 as uuid4} from "uuid";
 
 
 const Base = styled.div`
@@ -89,12 +90,15 @@ export default function TwittingContainer({ userObj, tweetObj, setTweet }) {
     const [photoAttachment, setPhotoAttachment] = useState();
 
   const onTweetBtnClick = async (event) => {
-    await dbService.collection("tweets").add({
-      text: tweetObj,
-      createdAt: Date.now(),
-      creatorId: userObj.uid,
-    });
-    setTweet("");
+      const fileRef = storageService.ref().child(`${userObj.uid}/${uuid4()}`);
+      const response = await fileRef.putString(photoAttachment, "data_url");
+      console.log(response);
+    // await dbService.collection("tweets").add({
+    //   text: tweetObj,
+    //   createdAt: Date.now(),
+    //   creatorId: userObj.uid,
+    // });
+    // setTweet("");
   };
 
   const onChange = (event) => {
