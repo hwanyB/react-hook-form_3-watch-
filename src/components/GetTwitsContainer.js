@@ -95,6 +95,11 @@ export default function GetTwitsContainer({ userObj, tweetObj }) {
         <ProfileImg />
         <UserName></UserName>
       </ProfileImgWrapper>
+      {
+          tweetObj.photoAttachmentUrl && (
+              <img width='50px' src={tweetObj.photoAttachmentUrl} />
+          )
+      }
       {isEditing ? (
         <EditTweetForm onSubmit={onEditSubmit}>
           <EditInput type='text' value={newTweetValue} onChange={onEditChange} required autoFocus />

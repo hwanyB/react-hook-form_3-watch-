@@ -90,15 +90,21 @@ export default function TwittingContainer({ userObj, tweetObj, setTweet }) {
     const [photoAttachment, setPhotoAttachment] = useState();
 
   const onTweetBtnClick = async (event) => {
-      const fileRef = storageService.ref().child(`${userObj.uid}/${uuid4()}`);
-      const response = await fileRef.putString(photoAttachment, "data_url");
-      console.log(response);
-    // await dbService.collection("tweets").add({
-    //   text: tweetObj,
-    //   createdAt: Date.now(),
-    //   creatorId: userObj.uid,
-    // });
-    // setTweet("");
+      let photoAttachmentUrl = "";
+      if(photoAttachment != ""){
+        const photoAttachmentRef = storageService.ref().child(`${userObj.uid}/${uuid4()}`);
+        const response = await photoAttachmentRef.putString(photoAttachment, "data_url");
+        photoAttachmentUrl =  await response.ref.getDownloadURL();
+    }
+    const tweet = {
+      text: tweetObj,
+      createdAt: Date.now(),
+      creatorId: userObj.uid,
+      photoAttachmentUrl,
+    };
+      await dbService.collection("tweets").add(tweet);
+    setTweet("");
+    setPhotoAttachment("");
   };
 
   const onChange = (event) => {
