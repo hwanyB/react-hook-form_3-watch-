@@ -160,7 +160,7 @@ const LoginButton = styled.button`
   color: #fff;
   font-size: 20px;
   font-weight: 700;
-  padding: 0 20px;
+  padding: 0 30px;
   /* &:hover {
     
   } */
@@ -176,7 +176,7 @@ const EmailInput = styled.input`
   font-size: 20px;
   font-weight: 300;
   outline: none;
-  padding: 0 20px;
+  padding: 0 30px;
   box-sizing: border-box;
 
 `;
@@ -190,7 +190,7 @@ const PasswordInput = styled.input`
   font-size: 20px;
   font-weight: 300;
   outline: none;
-  padding: 0 20px;
+  padding: 0 30px;
   margin: 10px 0 25px 0;
   box-sizing: border-box;
 `;

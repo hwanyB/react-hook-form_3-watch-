@@ -87,7 +87,7 @@ const TweetBtn = styled.button`
 
 
 export default function TwittingContainer({ userObj, tweetObj, setTweet }) {
-    const [photoAttachment, setPhotoAttachment] = useState();
+    const [photoAttachment, setPhotoAttachment] = useState("");
 
   const onTweetBtnClick = async (event) => {
       let photoAttachmentUrl = "";
