@@ -91,7 +91,7 @@ export default function TwittingContainer({ userObj, tweetObj, setTweet }) {
 
   const onTweetBtnClick = async (event) => {
       let photoAttachmentUrl = "";
-      if(photoAttachment != ""){
+      if(photoAttachment !== ""){
         const photoAttachmentRef = storageService.ref().child(`${userObj.uid}/${uuid4()}`);
         const response = await photoAttachmentRef.putString(photoAttachment, "data_url");
         photoAttachmentUrl =  await response.ref.getDownloadURL();

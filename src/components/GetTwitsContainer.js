@@ -1,4 +1,4 @@
-import { dbService } from 'fbase';
+import { dbService, storageService } from 'fbase';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { MdModeEditOutline, MdDelete } from 'react-icons/md';
@@ -23,13 +23,25 @@ const TweetWrapper = styled.div`
 const ProfileImgWrapper = styled.div`
     
 `;
+
+
 const ProfileImg = styled.img``;
 const UserName = styled.div``;
 const Tweet = styled.div`
-  color: #000;
+  
+`;
+
+const TweetPhoto = styled.img`
+    width: 50%;
+    border-radius: 50px;
+    margin-bottom: 20px;
+`;
+const TweetTxt = styled.p`
+color: #000;
   font-weight: 300;
   text-align: left;
 `;
+
 const UpdateWrapper = styled.div`
     display: flex;
 `;
@@ -73,6 +85,7 @@ export default function GetTwitsContainer({ userObj, tweetObj }) {
         const ok = window.confirm("Are you sure you want to delete?");
         if(ok){
           await dbService.doc(`tweets/${tweetObj.id}`).delete();
+          await storageService.refFromURL(tweetObj.photoAttachmentUrl).delete();
         }
     };
     const toggleEditing = () => setIsEditing((prev) => !prev)
@@ -95,18 +108,31 @@ export default function GetTwitsContainer({ userObj, tweetObj }) {
         <ProfileImg />
         <UserName></UserName>
       </ProfileImgWrapper>
-      {
+      {/* {
           tweetObj.photoAttachmentUrl && (
-              <img width='50px' src={tweetObj.photoAttachmentUrl} />
+              <Photo src={tweetObj.photoAttachmentUrl} alt={tweetObj.text} />
           )
-      }
+      } */}
       {isEditing ? (
         <EditTweetForm onSubmit={onEditSubmit}>
-          <EditInput type='text' value={newTweetValue} onChange={onEditChange} required autoFocus />
-          <EditSubmit type='submit' value="Update Tweet" />
+          <EditInput
+            type='text'
+            value={newTweetValue}
+            onChange={onEditChange}
+            required
+            autoFocus
+          />
+          <EditSubmit type='submit' value='Update Tweet' />
         </EditTweetForm>
+      ) : tweetObj.photoAttachmentUrl ? (
+        <Tweet>
+          <TweetPhoto src={tweetObj.photoAttachmentUrl} alt={tweetObj.text} />
+          <TweetTxt>{tweetObj.text}</TweetTxt>
+        </Tweet>
       ) : (
-        <Tweet>{tweetObj.text}</Tweet>
+        <Tweet>
+          <TweetTxt>{tweetObj.text}</TweetTxt>
+        </Tweet>
       )}
       {tweetObj.creatorId === userObj.uid && (
         <UpdateWrapper>
