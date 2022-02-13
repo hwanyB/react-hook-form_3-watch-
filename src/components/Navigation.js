@@ -37,7 +37,7 @@ export default function Navigation({setIsLoggedIn}) {
     const onLogoutClick = () => {
         authService.signOut();
         setIsLoggedIn(false);
-    }
+    };
   return (
     <Base>
       <NavList>

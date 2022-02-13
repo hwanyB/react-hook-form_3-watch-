@@ -1,14 +1,11 @@
 import { dbService, storageService } from 'fbase';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { MdModeEditOutline, MdDelete } from 'react-icons/md';
 import { CgClose } from 'react-icons/cg';
 
 
-const Base = styled.div`
-  font-family: "Noto Sans KR", sans-serif;
 
-`;
 const TweetWrapper = styled.div`
   width: 100%;
   background-color: #fff;
@@ -17,33 +14,47 @@ const TweetWrapper = styled.div`
   border-radius: 30px;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
   margin-bottom: 20px;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 6fr 1fr;
+  font-family: 'Noto Sans KR', sans-serif;
+
 `;
 const ProfileImgWrapper = styled.div`
-    
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    object-fit: contain;
+    margin-right: 50px;
 `;
 
 
-const ProfileImg = styled.img``;
-const UserName = styled.div``;
+const ProfileImg = styled.img`
+width: 50px;
+    height: 50px;
+`;
+const UserName = styled.p``;
 const Tweet = styled.div`
+  margin: auto 0;
   
 `;
 
 const TweetPhoto = styled.img`
     width: 50%;
-    border-radius: 50px;
+    border-radius: 30px;
     margin-bottom: 20px;
 `;
 const TweetTxt = styled.p`
 color: #000;
   font-weight: 300;
   text-align: left;
+  font-size: 20px;
+
 `;
 
 const UpdateWrapper = styled.div`
     display: flex;
+    justify-self: end;
 `;
 const EditTweet = styled.div`
     margin-right: 10px;
@@ -105,7 +116,7 @@ export default function GetTwitsContainer({ userObj, tweetObj }) {
   return (
     <TweetWrapper>
       <ProfileImgWrapper>
-        <ProfileImg />
+        <ProfileImg src={userObj.photoUrl ? userObj.photoUrl : 'profileimg.png'} />
         <UserName></UserName>
       </ProfileImgWrapper>
       {/* {

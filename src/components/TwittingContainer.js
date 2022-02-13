@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import {HiPhotograph} from 'react-icons/hi';
 import { dbService, storageService } from 'fbase';
-import GetTwitsContainer from './GetTwitsContainer';
 import { CgClose } from 'react-icons/cg';
 import { v4 as uuid4} from "uuid";
+import { Button } from './AuthContainer';
 
 
 const Base = styled.div`
@@ -62,7 +62,7 @@ const TwittingInput = styled.input`
     font-size: 20px;
     font-weight: 300;
 `;
-const AddPhotoIcon = styled.form`
+const AddPhotoIcon = styled.div`
     cursor: pointer;
 `;
 const PhotoInput = styled.input`
@@ -71,18 +71,8 @@ const PhotoInput = styled.input`
     outline: none;
     display: none;
 `;
-const TweetBtn = styled.button`
-  height: 35px;
-  border-radius: 50px;
-  border: none;
-  cursor: pointer;
-  background-color: #2b9cff;
-  color: #fff;
-  font-size: 15px;
-  font-weight: 700;
-  padding: 0 20px;
+const TweetBtn = styled(Button)`
   align-self: flex-end;
-
 `;
 
 
@@ -141,7 +131,7 @@ export default function TwittingContainer({ userObj, tweetObj, setTweet }) {
     <Base>
       <TwittingBase>
         <ProfileImgWrapper>
-          <ProfileImg src='profileimg.jpg' />
+          <ProfileImg src='profileimg.png' />
         </ProfileImgWrapper>
         <TwittingForm>
           {photoAttachment && (

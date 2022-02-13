@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import TwittingContainer from "components/TwittingContainer";
 import GetTwitsContainer from "components/GetTwitsContainer";
 import { dbService } from "fbase";
@@ -7,7 +7,7 @@ import { dbService } from "fbase";
 const Base = styled.div`
   width: 100%;
   min-height: 100vh;
-  padding: 100px 250px 0 250px;
+  padding: 100px 250px 100px 250px;
   background-color: #e8f4ff;
   margin: 0 auto;
   box-sizing: border-box;

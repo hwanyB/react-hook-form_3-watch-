@@ -98,13 +98,13 @@ const IntroLogo = styled.img`
 
 
 
-export default function Auth() {
+export default function Auth({ isLoggedIn }) {
   
 
   return (
     <>
       <Base>
-        <AuthContainer />
+        <AuthContainer isLoggedIn={isLoggedIn} />
         <BgBase>
           <BgWrapper>
             <BgImage src='/mainbg.jpg' />
