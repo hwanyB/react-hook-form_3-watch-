@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import {HiPhotograph} from 'react-icons/hi';
-import { dbService, storageService } from 'fbase';
-import { CgClose } from 'react-icons/cg';
-import { v4 as uuid4} from "uuid";
-import { Button } from './AuthContainer';
-
+import React, { useState } from "react";
+import styled from "styled-components";
+import { HiPhotograph } from "react-icons/hi";
+import { dbService, storageService } from "fbase";
+import { CgClose } from "react-icons/cg";
+import { v4 as uuid4 } from "uuid";
+import { Button } from "./AuthContainer";
 
 const Base = styled.div`
-    width: 100%;
+  width: 100%;
 `;
 const TwittingBase = styled.div`
   width: 100%;
@@ -25,66 +24,70 @@ const TwittingBase = styled.div`
   margin-bottom: 50px;
 `;
 const ProfileImgWrapper = styled.div`
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    overflow: hidden;
-    object-fit: cover;
-    margin-right: 50px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  object-fit: cover;
+  margin-right: 50px;
 `;
 const ProfileImg = styled.img`
-    height: 50px;
+  height: 50px;
 `;
 const TwittingForm = styled.form`
-    /* width: 40%; */
-    position: relative;
-    /* margin-left: -250px; */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  /* width: 40%; */
+  position: relative;
+  /* margin-left: -250px; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 const PrevieWrapper = styled.div`
-    display: flex;
+  display: flex;
 `;
 
 const PhotoPreview = styled.img`
-    width: 50px;
+  width: 50px;
 `;
 const CacleAdd = styled.div`
-    cursor: pointer;
-    margin-left: 20px;
+  cursor: pointer;
+  margin-left: 20px;
 `;
 const TwittingInput = styled.input`
-    border: none;
-    outline: none;
-    padding: 10px;
-    font-size: 20px;
-    font-weight: 300;
+  border: none;
+  outline: none;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: 300;
 `;
 const AddPhotoIcon = styled.div`
-    cursor: pointer;
+  cursor: pointer;
 `;
 const PhotoInput = styled.input`
-    background-color: transparent;
-    border: none;
-    outline: none;
-    display: none;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  display: none;
 `;
 const TweetBtn = styled(Button)`
   align-self: flex-end;
 `;
 
-
 export default function TwittingContainer({ userObj, tweetObj, setTweet }) {
-    const [photoAttachment, setPhotoAttachment] = useState("");
+  const [photoAttachment, setPhotoAttachment] = useState("");
 
   const onTweetBtnClick = async (event) => {
-      let photoAttachmentUrl = "";
-      if(photoAttachment !== ""){
-        const photoAttachmentRef = storageService.ref().child(`${userObj.uid}/${uuid4()}`);
-        const response = await photoAttachmentRef.putString(photoAttachment, "data_url");
-        photoAttachmentUrl =  await response.ref.getDownloadURL();
+    let photoAttachmentUrl = "";
+    if (photoAttachment !== "") {
+      const photoAttachmentRef = storageService
+        .ref()
+        .child(`${userObj.uid}/${uuid4()}`);
+      const response = await photoAttachmentRef.putString(
+        photoAttachment,
+        "data_url"
+      );
+      photoAttachmentUrl = await response.ref.getDownloadURL();
     }
     const tweet = {
       text: tweetObj,
@@ -92,7 +95,7 @@ export default function TwittingContainer({ userObj, tweetObj, setTweet }) {
       creatorId: userObj.uid,
       photoAttachmentUrl,
     };
-      await dbService.collection("tweets").add(tweet);
+    await dbService.collection("tweets").add(tweet);
     setTweet("");
     setPhotoAttachment("");
   };
@@ -104,28 +107,28 @@ export default function TwittingContainer({ userObj, tweetObj, setTweet }) {
     setTweet(value);
   };
 
-  const onAddPhotoChange =  (event) => {
+  const onAddPhotoChange = (event) => {
     const {
-        target : { files },
+      target: { files },
     } = event;
     const Photos = files[0];
     const reader = new FileReader();
     reader.onloadend = (finishedEvent) => {
-        const {
-          currentTarget: { result },
-        } = finishedEvent;
-        setPhotoAttachment(result);
-    }
+      const {
+        currentTarget: { result },
+      } = finishedEvent;
+      setPhotoAttachment(result);
+    };
     reader.readAsDataURL(Photos);
-  }
+  };
 
   const onAddPhotoClick = () => {
-      document.getElementById("photoInput").click();
-  }
+    document.getElementById("photoInput").click();
+  };
 
   const onCancleAddClick = () => {
-      setPhotoAttachment(null);
-  }
+    setPhotoAttachment(null);
+  };
 
   return (
     <Base>

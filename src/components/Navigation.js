@@ -1,10 +1,10 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import styled from 'styled-components';
-import { BiLogOut } from 'react-icons/bi';
-import { BsTwitter } from 'react-icons/bs';
-import { FaUserAlt } from 'react-icons/fa';
-import { authService } from 'fbase';
+import React from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { BiLogOut } from "react-icons/bi";
+import { BsTwitter } from "react-icons/bs";
+import { FaUserAlt } from "react-icons/fa";
+import { authService } from "fbase";
 
 const Base = styled.nav`
   position: fixed;
@@ -22,9 +22,7 @@ const NavList = styled.ul`
   padding: 0 250px;
   align-items: center;
 `;
-const NavItem = styled.li`
-  
-`;
+const NavItem = styled.li``;
 const StyledLink = styled(Link)`
   box-sizing: border-box;
   width: 30px;
@@ -32,12 +30,11 @@ const StyledLink = styled(Link)`
   text-decoration: none;
 `;
 
-
-export default function Navigation({setIsLoggedIn}) {
-    const onLogoutClick = () => {
-        authService.signOut();
-        setIsLoggedIn(false);
-    };
+export default function Navigation({ setIsLoggedIn }) {
+  const onLogoutClick = () => {
+    authService.signOut();
+    setIsLoggedIn(false);
+  };
   return (
     <Base>
       <NavList>

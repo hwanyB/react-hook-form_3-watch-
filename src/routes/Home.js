@@ -14,18 +14,17 @@ const Base = styled.div`
 `;
 
 export default function Home({ userObj }) {
-  const [tweet, setTweet] = useState('');
+  const [tweet, setTweet] = useState("");
   const [tweets, setTweets] = useState([]);
   useEffect(() => {
-      dbService.collection('tweets').onSnapshot((snapshot) => {
-          const tweetArr = snapshot.docs.map((doc) => ({
-              id: doc.id,
-              ...doc.data(),
-          }));
-          setTweets(tweetArr);
-      });
+    dbService.collection("tweets").onSnapshot((snapshot) => {
+      const tweetArr = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setTweets(tweetArr);
+    });
   }, []);
-
 
   return (
     <Base>

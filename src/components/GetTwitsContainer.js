@@ -1,10 +1,8 @@
-import { dbService, storageService } from 'fbase';
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { MdModeEditOutline, MdDelete } from 'react-icons/md';
-import { CgClose } from 'react-icons/cg';
-
-
+import { dbService, storageService } from "fbase";
+import React, { useState } from "react";
+import styled from "styled-components";
+import { MdModeEditOutline, MdDelete } from "react-icons/md";
+import { CgClose } from "react-icons/cg";
 
 const TweetWrapper = styled.div`
   width: 100%;
@@ -16,64 +14,57 @@ const TweetWrapper = styled.div`
   margin-bottom: 20px;
   display: grid;
   grid-template-columns: 1fr 6fr 1fr;
-  font-family: 'Noto Sans KR', sans-serif;
-
+  font-family: "Noto Sans KR", sans-serif;
 `;
 const ProfileImgWrapper = styled.div`
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    overflow: hidden;
-    object-fit: contain;
-    margin-right: 50px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  object-fit: contain;
+  margin-right: 50px;
 `;
 
-
 const ProfileImg = styled.img`
-width: 50px;
-    height: 50px;
+  width: 50px;
+  height: 50px;
 `;
 const UserName = styled.p``;
 const Tweet = styled.div`
   margin: auto 0;
-  
 `;
 
 const TweetPhoto = styled.img`
-    width: 50%;
-    border-radius: 30px;
-    margin-bottom: 20px;
+  width: 50%;
+  border-radius: 30px;
+  margin-bottom: 20px;
 `;
 const TweetTxt = styled.p`
-color: #000;
+  color: #000;
   font-weight: 300;
   text-align: left;
   font-size: 20px;
-
 `;
 
 const UpdateWrapper = styled.div`
-    display: flex;
-    justify-self: end;
+  display: flex;
+  justify-self: end;
 `;
 const EditTweet = styled.div`
-    margin-right: 10px;
-    cursor: pointer;
+  margin-right: 10px;
+  cursor: pointer;
 `;
 const DeletTweet = styled.div`
   cursor: pointer;
 `;
 
-
-const EditTweetForm = styled.form`
-
-`;
+const EditTweetForm = styled.form``;
 const EditInput = styled.input`
   border: 1px solid #2b9cff;
   outline: none;
   padding: 10px;
   font-size: 20px;
-  font-weight: 300;  
+  font-weight: 300;
   border-radius: 50px;
 `;
 const EditSubmit = styled.input`
@@ -90,33 +81,35 @@ const EditSubmit = styled.input`
 `;
 
 export default function GetTwitsContainer({ userObj, tweetObj }) {
-    const [isEditing, setIsEditing] = useState(false);
-    const [newTweetValue, setNewTweetValue]= useState(tweetObj.text);
-    const onDeleteClick = async () => {
-        const ok = window.confirm("Are you sure you want to delete?");
-        if(ok){
-          await dbService.doc(`tweets/${tweetObj.id}`).delete();
-          await storageService.refFromURL(tweetObj.photoAttachmentUrl).delete();
-        }
-    };
-    const toggleEditing = () => setIsEditing((prev) => !prev)
-    const onEditSubmit = async (event) => {
-        event.preventDefault();
-        await dbService.doc(`tweets/${tweetObj.id}`).update({
-            text: newTweetValue,
-        });
-        setIsEditing(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [newTweetValue, setNewTweetValue] = useState(tweetObj.text);
+  const onDeleteClick = async () => {
+    const ok = window.confirm("Are you sure you want to delete?");
+    if (ok) {
+      await dbService.doc(`tweets/${tweetObj.id}`).delete();
+      await storageService.refFromURL(tweetObj.photoAttachmentUrl).delete();
     }
-    const onEditChange = (event) => {
-        const {
-          target: { value },
-        } = event;
-        setNewTweetValue(value);
-    };
+  };
+  const toggleEditing = () => setIsEditing((prev) => !prev);
+  const onEditSubmit = async (event) => {
+    event.preventDefault();
+    await dbService.doc(`tweets/${tweetObj.id}`).update({
+      text: newTweetValue,
+    });
+    setIsEditing(false);
+  };
+  const onEditChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setNewTweetValue(value);
+  };
   return (
     <TweetWrapper>
       <ProfileImgWrapper>
-        <ProfileImg src={userObj.photoUrl ? userObj.photoUrl : 'profileimg.png'} />
+        <ProfileImg
+          src={userObj.photoUrl ? userObj.photoUrl : "profileimg.png"}
+        />
         <UserName></UserName>
       </ProfileImgWrapper>
       {/* {

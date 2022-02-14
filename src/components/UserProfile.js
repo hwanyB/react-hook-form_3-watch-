@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Button } from "./AuthContainer";
-import { authService, dbService } from "fbase";
+import { authService } from "fbase";
 
 const Base = styled.div`
   font-family: "Noto Sans KR", sans-serif;
@@ -50,8 +50,6 @@ const Email = styled.p`
   font-size: 18px;
   margin-top: 10px;
   margin-bottom: 50px;
-`;
-const TweetTxt = styled.p`
 `;
 const EditProfileBtn = styled(Button)``;
 const SaveBtn = styled(Button)``;
@@ -109,10 +107,6 @@ export default function UserProfile({ refreshUser }) {
     }
   };
 
-
- 
-    
-    
   return (
     <Base>
       {isEditingProfile ? (
@@ -155,7 +149,6 @@ export default function UserProfile({ refreshUser }) {
           <EditProfileBtn onClick={onEditBtnClick}>Edit Profile</EditProfileBtn>
         </ProfieWrapper>
       )}
-      
     </Base>
   );
 }

@@ -16,6 +16,12 @@ const Base = styled.div`
   margin: 0;
   padding: 0;
   width: 50%;
+  @media screen and (max-width: 1500px) {
+    width: 60%;
+  }
+  @media screen and (max-width: 800px) {
+    width: 100%;
+  }
 `;
 
 const AuthWrapper = styled.div`
@@ -28,6 +34,10 @@ const AuthWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   box-sizing: border-box;
+  @media screen and (max-width: 550px) {
+    padding: 20px 40px;
+    text-align: center;
+  }
 `;
 const TopLogo = styled.img`
   width: 36px;
@@ -39,12 +49,31 @@ const GreetingTop = styled.h1`
   font-weight: 700;
   margin: 0;
   margin-bottom: 10px;
+  @media screen and (max-width: 1500px) {
+    font-size: 50px;
+  }
+  @media screen and (max-width: 800px) {
+    font-size: 40px;
+  }
+  @media screen and (max-width: 500px) {
+    font-size: 30px;
+  }
 `;
 const GreetingBottom = styled.h2`
   color: #2b9cff;
   font-size: 40px;
   font-weight: 500;
   margin: 0;
+  @media screen and (max-width: 1500px) {
+    font-size: 30px;
+  }
+  @media screen and (max-width: 800px) {
+    font-size: 20px;
+  }
+  @media screen and (max-width: 500px) {
+    font-size: 18px;
+    font-weight: 300;
+  }
 `;
 
 const AuthForm = styled.form`
@@ -76,9 +105,14 @@ export const Button = styled.button`
   font-size: 20px;
   font-weight: 700;
   padding: 0 30px;
+  white-space: nowrap;
 `;
 const CreateAccountWithEmail = styled(Button)`
   width: 380px;
+  @media screen and (max-width: 550px) {
+    width: 100%;
+
+  }
 `;
 const DivisionWapper = styled.div`
   width: 380px;
@@ -87,6 +121,11 @@ const DivisionWapper = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 15px 0;
+  @media screen and (max-width: 550px) {
+    margin: 15px auto;
+    width: 100%;
+
+  }
 `;
 const DivisionLine = styled.span`
   width: 160px;
@@ -101,6 +140,7 @@ const DivisionText = styled.p`
   font-weight: 300;
   margin: 0;
   padding: 0;
+  white-space: nowrap;
 `;
 const CreateAccountWithGoogle = styled.input`
   display: block;
@@ -116,6 +156,11 @@ const CreateAccountWithGoogle = styled.input`
   /* &:hover {
     
   } */
+  @media screen and (max-width: 550px) {
+    margin: 0 auto;
+    width: 100%;
+
+  }
 `;
 const CreateAccountWithGithub = styled.input`
   display: block;
@@ -132,6 +177,11 @@ const CreateAccountWithGithub = styled.input`
   /* &:hover {
     
   } */
+  @media screen and (max-width: 550px) {
+    margin: 0 auto;
+    margin-top: 10px;
+    width: 100%;
+  }
 `;
 const LoginWapper = styled.div`
   display: flex;
@@ -139,9 +189,19 @@ const LoginWapper = styled.div`
 `;
 const LoginText = styled.p`
   line-height: 35px;
+  color: #000;
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+  @media screen and (max-width: 400px) {
+    font-size: 11px;
+  }
 `;
 const Arrow = styled.span`
   margin-top: 10px;
+  @media screen and (max-width: 1200px) {
+    display: none;
+  }
 `;
 const LoginButton = styled(Button)``;
 
@@ -183,7 +243,8 @@ const ErrorText = styled.p`
 const SuccessSignupText = styled.p`
   color: #2b9cff;
   font-size: 13px;
-  font-weight: 300;
+  font-weight: 500;
+  margin-top: 20px;
 `;
 
 export default function AuthContainer({ isLoggedIn }) {
@@ -198,7 +259,7 @@ export default function AuthContainer({ isLoggedIn }) {
   const [bottomBtnTxt, setBottomBtnTxt] = useState("로그인");
 
   useEffect(() => {
-    if(!isLoggedIn){
+    if (!isLoggedIn) {
       setTimeout(() => {
         setAuthWrapperDp(true);
       }, 5000);
@@ -235,10 +296,7 @@ export default function AuthContainer({ isLoggedIn }) {
       if (btnTxt === "가입하기") {
         //create account
         setSuccessSignup("가입이 완료되었습니다.");
-        await authService.createUserWithEmailAndPassword(
-          email,
-          password
-        );
+        await authService.createUserWithEmailAndPassword(email, password);
       } else if (btnTxt === "로그인") {
         //log in
         await authService.signInWithEmailAndPassword(email, password);
