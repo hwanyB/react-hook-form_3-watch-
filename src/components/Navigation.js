@@ -21,6 +21,15 @@ const NavList = styled.ul`
   justify-content: space-between;
   padding: 0 250px;
   align-items: center;
+  @media screen and (max-width: 1500px) {
+    padding: 0 120px;
+  }
+  @media screen and (max-width: 800px) {
+    padding: 0 50px;
+  }
+  @media screen and (max-width: 500px) {
+    padding: 0 20px;
+  }
 `;
 const NavItem = styled.li``;
 const StyledLink = styled(Link)`

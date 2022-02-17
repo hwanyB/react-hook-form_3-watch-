@@ -18,6 +18,9 @@ const ProfieWrapper = styled.div`
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
   margin-bottom: 50px;
   margin-top: 150px;
+  @media screen and (max-width: 800px) {
+    margin-top: 100px;
+  }
 `;
 
 const ProfileImgWrapper = styled.div`
@@ -30,10 +33,19 @@ const ProfileImgWrapper = styled.div`
   object-fit: cover;
   object-position: center center;
   overflow: hidden;
+  @media screen and (max-width: 800px) {
+    width: 200px;
+    height: 200px;
+    margin-top: -150px;
+  }
 `;
 const ProfileImg = styled.img`
   max-width: 350px;
   cursor: ${(props) => props.isEditingProfile === true && "pointer"};
+  @media screen and (max-width: 800px) {
+    width: 200px;
+    height: 200px;
+  }
 `;
 const AddProfileImgInput = styled.input`
   display: none;
@@ -44,12 +56,22 @@ const DisplayName = styled.h1`
   margin-top: 50px;
   height: 80px;
   line-height: 80px;
+  @media screen and (max-width: 800px) {
+    font-size: 35px;
+    line-height: 35px;
+    height: 50px;
+    margin-top: 30px;
+  }
 `;
 const Email = styled.p`
   font-weight: 300;
   font-size: 18px;
   margin-top: 10px;
   margin-bottom: 50px;
+  @media screen and (max-width: 800px) {
+    font-size: 15px;
+    margin-bottom: 30px;
+  }
 `;
 const EditProfileBtn = styled(Button)``;
 const SaveBtn = styled(Button)``;
@@ -71,6 +93,13 @@ const NameInput = styled.input`
   padding: 0;
   height: 80px;
   line-height: 80px;
+  width: 100%;
+  @media screen and (max-width: 800px) {
+    font-size: 35px;
+    line-height: 35px;
+    height: 50px;
+    margin-top: 30px;
+  }
 `;
 
 export default function UserProfile({ refreshUser }) {

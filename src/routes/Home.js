@@ -6,11 +6,21 @@ import { dbService } from "fbase";
 
 const Base = styled.div`
   width: 100%;
+  font-family: "Noto Sans KR", sans-serif;
   min-height: 100vh;
-  padding: 100px 250px 100px 250px;
+  padding: 100px 250px;
   background-color: #e8f4ff;
   margin: 0 auto;
   box-sizing: border-box;
+  @media screen and (max-width: 1500px) {
+    padding: 150px 120px;
+  }
+  @media screen and (max-width: 800px) {
+    padding: 120px 50px;
+  }
+  @media screen and (max-width: 500px) {
+    padding: 100px 20px;
+  }
 `;
 
 export default function Home({ userObj }) {

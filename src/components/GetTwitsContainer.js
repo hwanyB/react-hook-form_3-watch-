@@ -6,6 +6,7 @@ import { CgClose } from "react-icons/cg";
 
 const TweetWrapper = styled.div`
   width: 100%;
+  position: relative;
   background-color: #fff;
   padding: 20px;
   box-sizing: border-box;
@@ -15,6 +16,9 @@ const TweetWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 6fr 1fr;
   font-family: "Noto Sans KR", sans-serif;
+  @media screen and (max-width: 1200px) {
+    min-height: ${props => props.isEditing && '200px'};
+  }
 `;
 const ProfileImgWrapper = styled.div`
   width: 50px;
@@ -23,6 +27,9 @@ const ProfileImgWrapper = styled.div`
   overflow: hidden;
   object-fit: contain;
   margin-right: 50px;
+  @media screen and (max-width: 800px) {
+    margin-right: 20px;
+  }
 `;
 
 const ProfileImg = styled.img`
@@ -32,23 +39,32 @@ const ProfileImg = styled.img`
 const UserName = styled.p``;
 const Tweet = styled.div`
   margin: auto 0;
+  overflow: hidden;
 `;
 
 const TweetPhoto = styled.img`
-  width: 50%;
+  width: 70%;
   border-radius: 30px;
   margin-bottom: 20px;
+  @media screen and (max-width: 800px) {
+    width: 80%;
+  }
+  @media screen and (max-width: 600px) {
+    width: 100%;
+  }
 `;
 const TweetTxt = styled.p`
   color: #000;
   font-weight: 300;
   text-align: left;
   font-size: 20px;
+  word-wrap: break-word;
 `;
 
 const UpdateWrapper = styled.div`
   display: flex;
   justify-self: end;
+  margin-left: 20px;
 `;
 const EditTweet = styled.div`
   margin-right: 10px;
@@ -58,14 +74,26 @@ const DeletTweet = styled.div`
   cursor: pointer;
 `;
 
-const EditTweetForm = styled.form``;
-const EditInput = styled.input`
+const EditTweetForm = styled.form`
+  width: 100%;
+`;
+const EditInput = styled.textarea`
+  font-family: "Noto Sans KR", sans-serif;
   border: 1px solid #2b9cff;
+  box-sizing: border-box;
   outline: none;
   padding: 10px;
   font-size: 20px;
   font-weight: 300;
-  border-radius: 50px;
+  border-radius: 30px;
+  width: 100%;
+  resize: none;
+  height: 70%;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 const EditSubmit = styled.input`
   height: 35px;
@@ -74,10 +102,18 @@ const EditSubmit = styled.input`
   cursor: pointer;
   background-color: #2b9cff;
   color: #fff;
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 700;
-  padding: 0 20px;
-  margin-left: 20px;
+  padding: 0 30px;
+  margin-top: 20px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  @media screen and (max-width: 800px) {
+    font-size: 15px;
+    font-weight: 500;
+    padding: 0 20px;
+  }
 `;
 
 export default function GetTwitsContainer({ userObj, tweetObj }) {
@@ -105,7 +141,7 @@ export default function GetTwitsContainer({ userObj, tweetObj }) {
     setNewTweetValue(value);
   };
   return (
-    <TweetWrapper>
+    <TweetWrapper isEditing={isEditing}>
       <ProfileImgWrapper>
         <ProfileImg
           src={userObj.photoUrl ? userObj.photoUrl : "profileimg.png"}
@@ -125,6 +161,7 @@ export default function GetTwitsContainer({ userObj, tweetObj }) {
             onChange={onEditChange}
             required
             autoFocus
+            maxLength={120}
           />
           <EditSubmit type='submit' value='Update Tweet' />
         </EditTweetForm>

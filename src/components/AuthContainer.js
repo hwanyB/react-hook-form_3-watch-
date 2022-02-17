@@ -106,12 +106,18 @@ export const Button = styled.button`
   font-weight: 700;
   padding: 0 30px;
   white-space: nowrap;
+  @media screen and (max-width: 800px) {
+    height: 30px;
+
+    font-size: 15px;
+    font-weight: 500;
+    padding: 0 20px;
+  }
 `;
 const CreateAccountWithEmail = styled(Button)`
   width: 380px;
   @media screen and (max-width: 550px) {
     width: 100%;
-
   }
 `;
 const DivisionWapper = styled.div`
@@ -124,7 +130,6 @@ const DivisionWapper = styled.div`
   @media screen and (max-width: 550px) {
     margin: 15px auto;
     width: 100%;
-
   }
 `;
 const DivisionLine = styled.span`
@@ -159,7 +164,6 @@ const CreateAccountWithGoogle = styled.input`
   @media screen and (max-width: 550px) {
     margin: 0 auto;
     width: 100%;
-
   }
 `;
 const CreateAccountWithGithub = styled.input`
@@ -212,7 +216,7 @@ const EmailInput = styled.input`
   border-radius: 50px;
   border: 1px solid #000;
   color: #000;
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 300;
   outline: none;
   padding: 0 30px;
@@ -225,7 +229,7 @@ const PasswordInput = styled.input`
   border-radius: 50px;
   border: 1px solid #000;
   color: #000;
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 300;
   outline: none;
   padding: 0 30px;

@@ -10,8 +10,9 @@ const Base = styled.div`
   width: 100%;
 `;
 const TwittingBase = styled.div`
+  position: relative;
   width: 100%;
-  height: 250px;
+  /* height: 250px; */
   background-color: #fff;
   padding: 20px;
   box-sizing: border-box;
@@ -22,6 +23,9 @@ const TwittingBase = styled.div`
   grid-template-columns: 1fr 5fr 1fr;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
   margin-bottom: 50px;
+  @media screen and (max-width: 800px) {
+    justify-content: space-between;
+  }
 `;
 const ProfileImgWrapper = styled.div`
   width: 50px;
@@ -30,17 +34,23 @@ const ProfileImgWrapper = styled.div`
   overflow: hidden;
   object-fit: cover;
   margin-right: 50px;
+  @media screen and (max-width: 800px) {
+    margin-right: 20px;
+  }
 `;
 const ProfileImg = styled.img`
   height: 50px;
 `;
 const TwittingForm = styled.form`
-  /* width: 40%; */
+  width: 100%;
+  min-height: 300px;
   position: relative;
-  /* margin-left: -250px; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  text-overflow: clip;
+  white-space: normal;
+  word-wrap: break-word;
 `;
 
 const PrevieWrapper = styled.div`
@@ -50,16 +60,19 @@ const PrevieWrapper = styled.div`
 const PhotoPreview = styled.img`
   width: 50px;
 `;
-const CacleAdd = styled.div`
+const CancleAdd = styled.div`
   cursor: pointer;
   margin-left: 20px;
+  line-height: 43px;
 `;
-const TwittingInput = styled.input`
+const TwittingInput = styled.textarea`
   border: none;
   outline: none;
-  padding: 10px;
   font-size: 20px;
   font-weight: 300;
+  height: 100%;
+  font-family: "Noto Sans KR", sans-serif;
+  resize: none;
 `;
 const AddPhotoIcon = styled.div`
   cursor: pointer;
@@ -72,6 +85,12 @@ const PhotoInput = styled.input`
 `;
 const TweetBtn = styled(Button)`
   align-self: flex-end;
+  @media screen and (max-width: 650px) {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+  }
+  
 `;
 
 export default function TwittingContainer({ userObj, tweetObj, setTweet }) {
@@ -140,16 +159,15 @@ export default function TwittingContainer({ userObj, tweetObj, setTweet }) {
           {photoAttachment && (
             <PrevieWrapper>
               <PhotoPreview src={photoAttachment} />
-              <CacleAdd onClick={onCancleAddClick}>
+              <CancleAdd onClick={onCancleAddClick}>
                 <CgClose color='#2B9CFF' size={25} />
-              </CacleAdd>
+              </CancleAdd>
             </PrevieWrapper>
           )}
 
           <TwittingInput
             value={tweetObj}
             onChange={onChange}
-            type='text'
             placeholder="What's happening?"
             maxLength={120}
           />
