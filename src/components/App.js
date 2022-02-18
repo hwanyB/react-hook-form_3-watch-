@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import Auth from "../routes/Auth";
 import Home from "../routes/Home";
 import { authService } from "../fbase";
@@ -35,7 +35,7 @@ function App() {
   };
 
   return (
-    <BrowserRouter>
+    <HashRouter base="/">
       {isLoggedIn && <Navigation setIsLoggedIn={setIsLoggedIn} />}
       <Routes>
         {isLoggedIn ? (
@@ -52,7 +52,7 @@ function App() {
           </>
         )}
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
