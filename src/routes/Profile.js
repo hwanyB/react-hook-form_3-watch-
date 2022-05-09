@@ -26,23 +26,33 @@ export default function Profile({ userObj, refreshUser }) {
   const user = authService.currentUser;
   const [myTweets, setMyTweets] = useState([]);
 
-  const getMyTweets = async () => {
-    const myTweet = await dbService
-      .collection("tweets")
-      .where("creatorId", "==", user.uid)
-      .get();
 
-    const myTweetsArr = myTweet.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-    setMyTweets(myTweetsArr);
-  };
-
+  
   useEffect(() => {
-    getMyTweets();
-  }, [myTweets]);
+    let isMounted = true;
 
+    const getMyTweets = async () => {
+      const myTweet = await dbService
+        .collection("tweets")
+        .where("creatorId", "==", user.uid)
+        .get();
+  
+      const myTweetsArr = myTweet.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      if(isMounted) {
+        setMyTweets(myTweetsArr);
+      }
+    };
+
+    getMyTweets();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+  
   return (
     <Base>
       <UserProfile refreshUser={refreshUser}></UserProfile>

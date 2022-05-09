@@ -107,6 +107,7 @@ export default function UserProfile({ refreshUser }) {
 
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [newDisplayName, setNewDisplayName] = useState(user.displayName);
+  const [newPhoto, setNewPhoto] = useState(user.photoURL);
 
   const onChange = (event) => {
     const {
@@ -114,10 +115,33 @@ export default function UserProfile({ refreshUser }) {
     } = event;
     setNewDisplayName(value);
   };
+  const onUploadPhoto = async (e) => {
+    const {
+      target: { files },
+    } = e;
+    const file = files[0];
+    const reader = new FileReader();
+    if(file) {
+      const blob = new Blob([file], { type: file.type });
+      reader.readAsDataURL(blob);
+    
+      // reader.onload = () => {
+      //   const result = reader.result;
+      //   setNewPhoto(result);
+      // }
+    }
+    reader.onloadend = (finishedEvent) => {
+      const {
+        currentTarget: { result },
+      } = finishedEvent;
+      setNewPhoto(result);
+    };
+  }
   const onSaveBtnClick = async () => {
     if (user.displayName !== newDisplayName) {
       await user.updateProfile({
         displayName: newDisplayName,
+        photoURL: newPhoto
       });
     }
     refreshUser();
@@ -145,9 +169,10 @@ export default function UserProfile({ refreshUser }) {
               type='file'
               accept='image/*'
               id='AddProfileImg'
+              onChange={onUploadPhoto}
             />
             <ProfileImg
-              src={user.photoURL ? user.photoURL : `profileimg.png`}
+              src={user.photoURL ? newPhoto : `${process.env.PUBLIC_URL}/profileimg.png` }
               onClick={onAddProfileImgClick}
               isEditingProfile={isEditingProfile}
             />
@@ -168,7 +193,7 @@ export default function UserProfile({ refreshUser }) {
         <ProfieWrapper>
           <ProfileImgWrapper>
             <ProfileImg
-              src={user.photoURL ? user.photoURL : `profileimg.png`}
+              src={user.photoURL ? user.photoURL : `${process.env.PUBLIC_URL}/profileimg.png`}
             />
           </ProfileImgWrapper>
           <DisplayName>

@@ -101,7 +101,9 @@ export default function GetMyTweets({ myTweetsObj }) {
     const ok = window.confirm("Are you sure you want to delete?");
     if (ok) {
       await dbService.doc(`tweets/${myTweetsObj.id}`).delete();
-      await storageService.refFromURL(myTweetsObj.photoAttachmentUrl).delete();
+      if(myTweetsObj.photoAttachmentUrl !== "") {
+        await storageService.ref(myTweetsObj.photoAttachmentUrl).delete();
+      }
     }
   };
   const toggleEditing = () => setIsEditing((prev) => !prev);

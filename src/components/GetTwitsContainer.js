@@ -144,15 +144,10 @@ export default function GetTwitsContainer({ userObj, tweetObj }) {
     <TweetWrapper isEditing={isEditing}>
       <ProfileImgWrapper>
         <ProfileImg
-          src={userObj.photoUrl ? userObj.photoUrl : "profileimg.png"}
+          src={userObj.photoUrl ? userObj.photoUrl : `${process.env.PUBLIC_URL}/profileimg.png`}
         />
         <UserName></UserName>
       </ProfileImgWrapper>
-      {/* {
-          tweetObj.photoAttachmentUrl && (
-              <Photo src={tweetObj.photoAttachmentUrl} alt={tweetObj.text} />
-          )
-      } */}
       {isEditing ? (
         <EditTweetForm onSubmit={onEditSubmit}>
           <EditInput

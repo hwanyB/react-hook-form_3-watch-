@@ -173,9 +173,9 @@ export default function Auth({ isLoggedIn }) {
         <AuthContainer isLoggedIn={isLoggedIn} />
         <BgBase>
           <BgWrapper>
-            <BgImage src='mainbg.jpg' />
+            <BgImage src={`${process.env.PUBLIC_URL}/mainbg.jpg`} />
           </BgWrapper>
-          <IntroLogo src='logowhite.png' />
+          <IntroLogo src={`${process.env.PUBLIC_URL}/logowhite.png`} />
         </BgBase>
       </Base>
     </>

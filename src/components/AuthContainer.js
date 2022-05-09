@@ -263,11 +263,19 @@ export default function AuthContainer({ isLoggedIn }) {
   const [bottomBtnTxt, setBottomBtnTxt] = useState("로그인");
 
   useEffect(() => {
+    let timeoutId = null;
+  
     if (!isLoggedIn) {
-      setTimeout(() => {
+      timeoutId = setTimeout(() => {
         setAuthWrapperDp(true);
       }, 5000);
     }
+  
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
   }, [isLoggedIn]);
 
   const onClickCreateAccountWithEmailBtn = (e) => {
@@ -332,7 +340,7 @@ export default function AuthContainer({ isLoggedIn }) {
     <Base>
       {authWrapperDp && (
         <AuthWrapper>
-          <TopLogo src='logoblue.png' />
+          <TopLogo src={`${process.env.PUBLIC_URL}/logoblue.png`} />
           <GreetingWrapper>
             <GreetingTop>지금 일어나고 있는 일.</GreetingTop>
             <GreetingBottom>트위터에서 찾아보세요 !</GreetingBottom>

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { HashRouter, Route, Routes } from "react-router-dom";
-import Auth from "../routes/Auth";
-import Home from "../routes/Home";
-import { authService } from "../fbase";
-import Navigation from "./Navigation";
+import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom";
+import Auth from "./routes/Auth";
+import Home from "./routes/Home";
+import { authService } from "./fbase";
+import Navigation from "./components/Navigation";
 import Profile from "routes/Profile";
 
 function App() {
@@ -35,7 +35,7 @@ function App() {
   };
 
   return (
-    <HashRouter base="/">
+    <BrowserRouter base="/">
       {isLoggedIn && <Navigation setIsLoggedIn={setIsLoggedIn} />}
       <Routes>
         {isLoggedIn ? (
@@ -52,7 +52,7 @@ function App() {
           </>
         )}
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 

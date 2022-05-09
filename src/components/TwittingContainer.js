@@ -153,7 +153,7 @@ export default function TwittingContainer({ userObj, tweetObj, setTweet }) {
     <Base>
       <TwittingBase>
         <ProfileImgWrapper>
-          <ProfileImg src='profileimg.png' />
+          <ProfileImg src={`${process.env.PUBLIC_URL}/profileimg.png`} />
         </ProfileImgWrapper>
         <TwittingForm>
           {photoAttachment && (
