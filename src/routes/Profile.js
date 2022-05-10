@@ -27,7 +27,7 @@ export default function Profile({ userObj, refreshUser }) {
   const [myTweets, setMyTweets] = useState([]);
 
 
-  
+
   useEffect(() => {
     let isMounted = true;
 
@@ -36,12 +36,12 @@ export default function Profile({ userObj, refreshUser }) {
         .collection("tweets")
         .where("creatorId", "==", user.uid)
         .get();
-  
+
       const myTweetsArr = myTweet.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
-      if(isMounted) {
+      if (isMounted) {
         setMyTweets(myTweetsArr);
       }
     };
@@ -52,7 +52,7 @@ export default function Profile({ userObj, refreshUser }) {
       isMounted = false;
     };
   }, []);
-  
+
   return (
     <Base>
       <UserProfile refreshUser={refreshUser}></UserProfile>

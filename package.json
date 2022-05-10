@@ -1,5 +1,5 @@
 {
-  "name": "twitter_clonecoding",
+  "name": "twitter",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -43,5 +43,5 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://hwanyb.github.io/twitter_clonecoding"
+  "homepage": "https://hwanyb.github.io/twitter-clonecoding/"
 }

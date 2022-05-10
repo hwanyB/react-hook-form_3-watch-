@@ -35,7 +35,7 @@ function App() {
   };
 
   return (
-    <BrowserRouter base="/">
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       {isLoggedIn && <Navigation setIsLoggedIn={setIsLoggedIn} />}
       <Routes>
         {isLoggedIn ? (
